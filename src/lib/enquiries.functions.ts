@@ -10,7 +10,7 @@ const enquirySchema = z.object({
 });
 
 export const submitEnquiry = createServerFn({ method: "POST" })
-  .inputValidator((data) => enquirySchema.parse(data))
+  .validator((data) => enquirySchema.parse(data))
   .handler(async ({ data }) => {
     const { createClient } = await import("@supabase/supabase-js");
 
