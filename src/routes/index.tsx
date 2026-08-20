@@ -67,8 +67,8 @@ function HomePage() {
                 alt="A living room featuring a hand-painted architectural illusion mural of a classical archway opening into a garden"
                 width={1440}
                 height={960}
+                loading="eager"
                 className="h-full w-full object-cover"
-                priority="true"
               />
             </div>
           </div>
