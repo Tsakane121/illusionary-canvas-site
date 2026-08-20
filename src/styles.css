@@ -39,38 +39,62 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  --font-serif: "Cormorant Garamond", "Georgia", serif;
-  --font-sans: "Inter", "system-ui", sans-serif;
+  /* Painter's palette accents */
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-vermilion: var(--vermilion);
+  --color-cobalt: var(--cobalt);
+  --color-viridian: var(--viridian);
+  --color-ochre: var(--ochre);
+  --color-magenta: var(--magenta);
+
+  --font-serif: "Fraunces", "Georgia", serif;
+  --font-sans: "Plus Jakarta Sans", "system-ui", sans-serif;
+
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-float-slow: float-slow 12s ease-in-out infinite;
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.875rem;
 
-  /* Warm linen and charcoal palette with terracotta accent */
-  --background: oklch(0.97 0.01 85);
-  --foreground: oklch(0.22 0.03 30);
-  --card: oklch(0.99 0.01 85);
-  --card-foreground: oklch(0.22 0.03 30);
-  --popover: oklch(0.99 0.01 85);
-  --popover-foreground: oklch(0.22 0.03 30);
-  --primary: oklch(0.52 0.13 45);
-  --primary-foreground: oklch(0.98 0.01 85);
-  --secondary: oklch(0.92 0.02 80);
-  --secondary-foreground: oklch(0.22 0.03 30);
-  --muted: oklch(0.9 0.02 80);
-  --muted-foreground: oklch(0.5 0.04 30);
-  --accent: oklch(0.65 0.07 140);
-  --accent-foreground: oklch(0.98 0.01 85);
+  /* Neutral canvas so the artwork leads */
+  --background: oklch(0.972 0.008 85);
+  --foreground: oklch(0.19 0.02 290);
+  --card: oklch(0.995 0.005 85);
+  --card-foreground: oklch(0.19 0.02 290);
+  --popover: oklch(0.995 0.005 85);
+  --popover-foreground: oklch(0.19 0.02 290);
+
+  /* Vibrant paint accents */
+  --primary: oklch(0.58 0.21 32);
+  --primary-foreground: oklch(0.985 0.008 85);
+  --secondary: oklch(0.93 0.015 85);
+  --secondary-foreground: oklch(0.19 0.02 290);
+  --muted: oklch(0.92 0.012 85);
+  --muted-foreground: oklch(0.47 0.02 290);
+  --accent: oklch(0.58 0.14 195);
+  --accent-foreground: oklch(0.985 0.008 85);
   --destructive: oklch(0.57 0.21 25);
-  --destructive-foreground: oklch(0.98 0.01 85);
-  --border: oklch(0.82 0.03 80);
-  --input: oklch(0.88 0.02 80);
-  --ring: oklch(0.52 0.13 45);
-  --chart-1: oklch(0.52 0.13 45);
-  --chart-2: oklch(0.65 0.07 140);
-  --chart-3: oklch(0.72 0.1 80);
-  --chart-4: oklch(0.35 0.04 30);
-  --chart-5: oklch(0.88 0.04 70);
+  --destructive-foreground: oklch(0.985 0.008 85);
+  --border: oklch(0.86 0.012 85);
+  --input: oklch(0.9 0.012 85);
+  --ring: oklch(0.58 0.21 32);
+
+  --ink: oklch(0.19 0.025 290);
+  --ink-foreground: oklch(0.96 0.01 85);
+  --vermilion: oklch(0.62 0.21 32);
+  --cobalt: oklch(0.52 0.2 262);
+  --viridian: oklch(0.56 0.13 178);
+  --ochre: oklch(0.78 0.15 78);
+  --magenta: oklch(0.58 0.22 345);
+
+  --chart-1: var(--vermilion);
+  --chart-2: var(--cobalt);
+  --chart-3: var(--viridian);
+  --chart-4: var(--ochre);
+  --chart-5: var(--magenta);
 }
 
 @layer base {
@@ -78,10 +102,15 @@
     border-color: var(--color-border);
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
 
   h1,
@@ -91,6 +120,42 @@
   h5,
   h6 {
     font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: var(--vermilion);
+    color: var(--ink-foreground);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0) rotate(3deg);
   }
 }
 
@@ -105,4 +170,61 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Fine canvas grain that keeps neutral areas tactile */
+@utility grain {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+  }
+}
+
+/* Soft paint-wash blobs used as background art */
+@utility paint-wash {
+  filter: blur(60px);
+  opacity: 0.5;
+}
+
+/* Underline that fills like a brushstroke on hover */
+@utility brush-link {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 2px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: right;
+    background: var(--vermilion);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@utility reveal-in {
+  opacity: 1;
+  transform: none;
 }

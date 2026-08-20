@@ -104,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap",
       },
     ],
   }),
@@ -152,57 +152,79 @@ function Header() {
     { to: "/services", label: "Services" },
     { to: "/gallery", label: "Gallery" },
     { to: "/about", label: "About" },
-    { to: "/contact", label: "Contact" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link to="/" className="font-serif text-2xl font-semibold tracking-tight text-foreground">
-          Mabasa Studio
+    <header className="sticky top-0 z-50 border-b border-border/50 bg-background/85 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
+        <Link to="/" className="group flex items-center gap-3">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink text-sm font-semibold text-ink-foreground transition-transform duration-500 group-hover:rotate-12">
+            M
+          </span>
+          <span className="font-serif text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+            Mabasa <span className="italic text-vermilion">Studio</span>
+          </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.to}
               to={link.to}
               activeProps={{ className: "text-foreground" }}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="brush-link text-sm font-medium tracking-wide text-muted-foreground transition-colors hover:text-foreground"
             >
               {link.label}
             </Link>
           ))}
-          <Link
-            to="/contact"
-            className="rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Enquire
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/contact"
+              className="rounded-full border border-foreground/20 px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/50 hover:bg-foreground/5"
+            >
+              Contact
+            </Link>
+            <Link
+              to="/contact"
+              hash="quote"
+              className="rounded-full bg-vermilion px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_10px_24px_-12px_var(--vermilion)] transition-transform hover:-translate-y-0.5"
+            >
+              Request a Quote
+            </Link>
+          </div>
         </nav>
 
         <button
-          className="flex flex-col gap-1.5 md:hidden"
+          className="flex flex-col gap-1.5 lg:hidden"
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
         >
-          <span className="h-px w-6 bg-foreground transition-transform" style={{ transform: isOpen ? "rotate(45deg) translateY(5px)" : "none" }} />
-          <span className="h-px w-4 bg-foreground self-end transition-all" style={{ opacity: isOpen ? 0 : 1, width: isOpen ? "1.5rem" : "1rem" }} />
-          <span className="h-px w-6 bg-foreground transition-transform" style={{ transform: isOpen ? "rotate(-45deg) translateY(-5px)" : "none" }} />
+          <span
+            className="h-0.5 w-6 rounded-full bg-foreground transition-transform"
+            style={{ transform: isOpen ? "rotate(45deg) translateY(5px)" : "none" }}
+          />
+          <span
+            className="h-0.5 w-4 self-end rounded-full bg-vermilion transition-all"
+            style={{ opacity: isOpen ? 0 : 1, width: isOpen ? "1.5rem" : "1rem" }}
+          />
+          <span
+            className="h-0.5 w-6 rounded-full bg-foreground transition-transform"
+            style={{ transform: isOpen ? "rotate(-45deg) translateY(-7px)" : "none" }}
+          />
         </button>
       </div>
 
       {isOpen && (
-        <div className="border-t border-border/60 bg-background md:hidden">
-          <nav className="flex flex-col gap-2 px-6 py-4">
+        <div className="border-t border-border/50 bg-background lg:hidden">
+          <nav className="flex flex-col gap-1 px-6 py-5">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 onClick={() => setIsOpen(false)}
                 activeProps={{ className: "text-foreground" }}
-                className="py-2 text-base font-medium text-muted-foreground transition-colors hover:text-foreground"
+                className="py-2 font-serif text-2xl font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
                 {link.label}
               </Link>
@@ -210,9 +232,17 @@ function Header() {
             <Link
               to="/contact"
               onClick={() => setIsOpen(false)}
-              className="mt-2 rounded-full bg-primary px-4 py-3 text-center text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              className="mt-3 rounded-full border border-foreground/20 px-4 py-3 text-center text-sm font-semibold text-foreground"
             >
-              Enquire
+              Contact
+            </Link>
+            <Link
+              to="/contact"
+              hash="quote"
+              onClick={() => setIsOpen(false)}
+              className="mt-2 rounded-full bg-vermilion px-4 py-3 text-center text-sm font-semibold text-primary-foreground"
+            >
+              Request a Quote
             </Link>
           </nav>
         </div>
@@ -223,48 +253,75 @@ function Header() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border/60 bg-secondary/30">
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        <div className="grid gap-8 md:grid-cols-3">
+    <footer className="grain relative overflow-hidden bg-ink text-ink-foreground">
+      <div
+        aria-hidden
+        className="paint-wash pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-vermilion"
+      />
+      <div
+        aria-hidden
+        className="paint-wash pointer-events-none absolute -bottom-32 right-0 h-80 w-80 rounded-full bg-cobalt"
+      />
+      <div className="relative mx-auto max-w-7xl px-6 py-16">
+        <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <Link to="/" className="font-serif text-2xl font-semibold text-foreground">
-              Mabasa Studio
+            <Link to="/" className="font-serif text-3xl font-semibold">
+              Mabasa <span className="italic text-ochre">Studio</span>
             </Link>
-            <p className="mt-3 max-w-xs text-sm text-muted-foreground">
-              Bespoke wall painting, decorative finishes, and artistic illusion design for distinctive interiors.
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-foreground/70">
+              Hand-painted murals, decorative finishes, and illusion art for interiors that deserve more than
+              paint on a wall.
             </p>
+            <div className="mt-6 flex gap-2" aria-hidden>
+              {["bg-vermilion", "bg-ochre", "bg-viridian", "bg-cobalt", "bg-magenta"].map((c) => (
+                <span key={c} className={`h-3 w-8 rounded-full ${c}`} />
+              ))}
+            </div>
           </div>
 
           <div>
-            <h3 className="font-sans text-sm font-semibold uppercase tracking-wider text-foreground">Explore</h3>
-            <nav className="mt-4 flex flex-col gap-2">
-              <Link to="/services" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-                Services
-              </Link>
-              <Link to="/gallery" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-                Gallery
-              </Link>
-              <Link to="/about" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-                About
-              </Link>
-              <Link to="/contact" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-                Contact
-              </Link>
+            <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.25em] text-ink-foreground/60">
+              Explore
+            </h3>
+            <nav className="mt-5 flex flex-col gap-3">
+              {[
+                { to: "/services", label: "Services" },
+                { to: "/gallery", label: "Gallery" },
+                { to: "/about", label: "About" },
+                { to: "/contact", label: "Contact" },
+              ].map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className="w-fit text-sm text-ink-foreground/75 transition-colors hover:text-ochre"
+                >
+                  {l.label}
+                </Link>
+              ))}
             </nav>
           </div>
 
           <div>
-            <h3 className="font-sans text-sm font-semibold uppercase tracking-wider text-foreground">Contact</h3>
-            <address className="mt-4 not-italic">
-              <p className="text-sm text-muted-foreground">hello@mabasastudio.com</p>
-              <p className="mt-1 text-sm text-muted-foreground">+27 12 345 6789</p>
-              <p className="mt-1 text-sm text-muted-foreground">Johannesburg, South Africa</p>
+            <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.25em] text-ink-foreground/60">
+              Studio
+            </h3>
+            <address className="mt-5 not-italic">
+              <p className="text-sm text-ink-foreground/75">hello@mabasastudio.com</p>
+              <p className="mt-2 text-sm text-ink-foreground/75">+27 12 345 6789</p>
+              <p className="mt-2 text-sm text-ink-foreground/75">Johannesburg, South Africa</p>
             </address>
+            <Link
+              to="/contact"
+              hash="quote"
+              className="mt-6 inline-flex rounded-full bg-ochre px-5 py-3 text-sm font-semibold text-ink transition-transform hover:-translate-y-0.5"
+            >
+              Request a Quote
+            </Link>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-border/60 pt-8 text-center">
-          <p className="text-xs text-muted-foreground">
+        <div className="mt-14 border-t border-ink-foreground/15 pt-8">
+          <p className="text-xs text-ink-foreground/50">
             © {new Date().getFullYear()} Mabasa Studio. All rights reserved.
           </p>
         </div>
@@ -272,3 +329,4 @@ function Footer() {
     </footer>
   );
 }
+
