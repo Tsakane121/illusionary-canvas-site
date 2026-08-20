@@ -33,7 +33,8 @@ function ContactPage() {
     setStatus("submitting");
     setErrorMessage("");
 
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const data = {
       name: String(formData.get("name") || ""),
       email: String(formData.get("email") || ""),
@@ -45,7 +46,7 @@ function ContactPage() {
     try {
       await submitEnquiry({ data });
       setStatus("success");
-      event.currentTarget.reset();
+      form.reset();
     } catch (error) {
       setStatus("error");
       setErrorMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
